@@ -70,7 +70,7 @@ public class Index implements EntryPoint {
     private static Button logonButton;
     private int page = 0;
 
-    private final WebppodsClient webppodsClient = new WebppodsClient(Logger.getLogger("TokensPlugin"));
+    private final WebppodsClient webppodsClient = new WebppodsClient(Logger.getLogger("pods-client"));
     private Demo1 demo1;
     private Demo2 demo2;
     private Demo3 demo3;
