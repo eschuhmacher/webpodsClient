@@ -2,9 +2,12 @@ package webpods.client.client.webpods.widgets;
 
 import java.util.Date;
 
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 
 import org.moxieapps.gwt.highcharts.client.Series;
+import org.moxieapps.gwt.highcharts.client.events.ChartSelectionEvent;
+import org.moxieapps.gwt.highcharts.client.events.ChartSelectionEventHandler;
 import webpods.client.client.webpods.Alarm;
 import webpods.client.client.webpods.PV;
 import webpods.client.client.webpods.PvDisplay;
@@ -33,7 +36,13 @@ public class XYChart extends HorizontalPanel {
                 .setPoints(new Number[] { 0 });
         chart.addSeries(series);
 
-
+        chart.setZoomType(Chart.ZoomType.X);
+        chart.setSelectionEventHandler(new ChartSelectionEventHandler() {
+            public boolean onSelection(ChartSelectionEvent e) {
+                Window.alert("Selected " + e.getXAxisMin() + " to " + e.getXAxisMax());
+                return true;
+            }
+        });
         add(chart);
 
     }
