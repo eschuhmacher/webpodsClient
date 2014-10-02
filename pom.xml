@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org</groupId>
+    <artifactId>webpods-client</artifactId>
+    <packaging>war</packaging>
+    <version>1.0-SNAPSHOT</version>
+
+    <repositories>
+        <repository>
+            <id>gwtquery</id>
+            <url>http://gwtquery-plugins.googlecode.com/svn/mavenrepo</url>
+        </repository>
+        <repository>
+            <id>smartgwt</id>
+            <url>http://www.smartclient.com/maven2</url>
+        </repository>
+        <repository>
+            <id>java.net2</id>
+            <name>Repository hosting the jee6 artifacts</name>
+            <url>http://download.java.net/maven/2</url>
+        </repository>
+
+    </repositories>
+
+    <properties>
+        <gwtVersion>2.5.0</gwtVersion>
+        <guava-version>13.0.1</guava-version>
+        <maven.compiler.source>1.6</maven.compiler.source>
+        <maven.compiler.target>1.6</maven.compiler.target>
+        <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
+        <log.path>${project.build.directory}/logs</log.path>
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>com.googlecode.gwtquery</groupId>
+            <artifactId>gwtquery</artifactId>
+            <version>1.2.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.watopi</groupId>
+            <artifactId>gwtchosen</artifactId>
+            <version>1.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.googlecode.gwtquery.plugins</groupId>
+            <artifactId>draggable-plugin</artifactId>
+            <version>1.0.4</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.googlecode.gwtquery.plugins</groupId>
+            <artifactId>droppable-plugin</artifactId>
+            <version>1.0.8</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.googlecode.gwtquery.plugins</groupId>
+            <artifactId>enhance-plugin</artifactId>
+            <version>1.0.4</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-servlet</artifactId>
+            <version>${gwtVersion}</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-user</artifactId>
+            <version>${gwtVersion}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>1.8.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava-gwt</artifactId>
+            <version>${guava-version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Provided by the servlet container, but sometimes referenced in the application code. -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.5</version>
+            <scope>provided</scope>
+        </dependency>
+
+
+        <dependency>
+            <groupId>com.smartgwt</groupId>
+            <artifactId>smartgwt</artifactId>
+            <version>3.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jfree</groupId>
+            <artifactId>jcommon</artifactId>
+            <version>1.0.21</version>
+        </dependency>
+
+        <dependency>
+            <groupId>jfree</groupId>
+            <artifactId>jfreechart</artifactId>
+            <version>1.0.12</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.gwt.google-apis</groupId>
+            <artifactId>gwt-visualization</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.moxieapps.gwt</groupId>
+            <artifactId>org.moxieapps.gwt.highcharts</artifactId>
+            <version>1.6.0</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/org.moxieapps.gwt.highcharts-1.6.0.jar</systemPath>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <outputDirectory>${webappDirectory}/WEB-INF/classes</outputDirectory>
+        <finalName>${artifactId}</finalName>
+        <resources>
+            <resource>
+                <filtering>true</filtering>
+                <directory>src/main/resources</directory>
+            </resource>
+            <resource>
+                <directory>src/main/java</directory>
+            </resource>
+            <resource>
+                <directory>src/main/webapp</directory>
+            </resource>
+        </resources>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>ui</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <!-- GWT Maven Plugin -->
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>gwt-maven-plugin</artifactId>
+                        <version>2.4.0</version> <!-- Damn you maven plugin! http://code.google.com/p/google-web-toolkit/issues/detail?id=7833 -->
+                        <dependencies>
+                            <dependency>
+                                <groupId>com.google.gwt</groupId>
+                                <artifactId>gwt-user</artifactId>
+                                <version>${gwtVersion}</version>
+                            </dependency>
+                            <dependency>
+                                <groupId>com.google.gwt</groupId>
+                                <artifactId>gwt-dev</artifactId>
+                                <version>${gwtVersion}</version>
+                            </dependency>
+                            <dependency>
+                                <groupId>com.google.gwt</groupId>
+                                <artifactId>gwt-servlet</artifactId>
+                                <version>${gwtVersion}</version>
+                            </dependency>
+                        </dependencies>
+
+                        <executions>
+                            <execution>
+                                <id>compile</id>
+                                <goals>
+                                    <goal>compile</goal>
+                                </goals>
+                                <configuration>
+                                    <localWorkers>4</localWorkers>
+                                    <!--<style>PRETTY</style>-->
+                                </configuration>
+                            </execution>
+                        </executions>
+                        <!-- Plugin configuration. There are many available options, see gwt-maven-plugin
+                     documentation at codehaus.org -->
+                        <configuration>
+                            <!--<server>:ssl</server>-->
+                            <extraJvmArgs>-Xmx1024M -XX:MaxPermSize=512M -Dnet.sf.ehcache.skipUpdateCheck=true</extraJvmArgs>
+                            <runTarget>index.html</runTarget>
+                            <hostedWebapp>${webappDirectory}</hostedWebapp>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-clean-plugin</artifactId>
+                        <version>2.5</version>
+                        <configuration>
+                            <filesets>
+                                <fileset>
+                                    <directory>src/main</directory>
+                                    <includes>
+                                        <directory>gwt-unitCache/**</directory>
+                                    </includes>
+                                    <followSymlinks>false</followSymlinks>
+                                </fileset>
+                            </filesets>
+                            <excludeDefaultDirectories>true</excludeDefaultDirectories>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>gwt-unitCache</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>clean</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>
